@@ -26,3 +26,9 @@ Tue, Apr 15, 2025 12:56:43 PM:
  tests:  1|5
 total_score: 10/70
 10d69c5
+Tue, Apr 15, 2025 12:56:57 PM: 
+ hashmap.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+ tests:  5|4
+total_score: 30/70
+e93cf7b
