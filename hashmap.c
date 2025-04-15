@@ -119,7 +119,7 @@ Pair * firstMap(HashMap * map) {
 
 Pair * nextMap(HashMap * map) {
     if(map == NULL) return NULL;
-    for(long i = map->current; i < map->capacity; ++i){
+    for(long i = map->current + 1; i < map->capacity; ++i){
         if(map->buckets[i] != NULL){
             map->current = i; //actualiza el indice del ultimo dato accedido
             return map->buckets[i]->value; //devuelve el par encontrado
