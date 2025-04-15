@@ -107,10 +107,9 @@ Pair * searchMap(HashMap * map,  char * key) {
 }
 
 Pair * firstMap(HashMap * map) { 
-    if(map == NULL) return NULL; //si el mapa es NULL, devuelve NULL
-    //map->current = -1;
-    for(size_t i = 0; i < map->capacity; ++i){ //busca el primer par en la tabla
-        if(map->buckets[i]->value != NULL){ //si el par no es NULL
+    if(map == NULL) return NULL;
+    for(long i = 0; i < map->capacity; i++){ //recorre la tabla
+        if(map->buckets[i] != NULL){ //si encuentra un par
             map->current = i; //actualiza el indice del ultimo dato accedido
             return map->buckets[i]; //devuelve el par encontrado
         }
