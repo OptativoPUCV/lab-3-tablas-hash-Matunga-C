@@ -122,7 +122,7 @@ Pair * nextMap(HashMap * map) {
     for(long i = map->current + 1; i < map->capacity; ++i){
         if(map->buckets[i] != NULL){
             map->current = i; //actualiza el indice del ultimo dato accedido
-            return map->buckets[i]->value; //devuelve el par encontrado
+            return map->buckets[i]; //devuelve el par encontrado
         }
     }
     return NULL;
