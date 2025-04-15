@@ -40,22 +40,7 @@ int is_equal(void* key1, void* key2){
 
 
 void insertMap(HashMap * map, char * key, void * value) {
-    if(map == NULL) return;
-    if(key == NULL) return;
-    if(value == NULL) return;
-    if(map->size >= map->capacity) enlarge(map); //si la tabla esta llena, se agranda
-    long index = hash(key, map->capacity);
-    Pair * new = createPair(key, value);
-    while(map->buckets[index] != NULL){ //busca un espacio libre
-        if(is_equal(map->buckets[index]->key, key)){ //si la clave ya existe, se reemplaza el valor
-            free(map->buckets[index]); //libera el espacio de la clave anterior
-            break;
-        }
-        index = (index + 1) % map->capacity; //busca el siguiente espacio libre
-    }
-    map->buckets[index] = new; //inserta el nuevo par en la tabla
-    map->size++;
-    map->current = index; //actualiza el indice del ultimo dato accedido       
+          
 }
 
 void enlarge(HashMap * map) {
