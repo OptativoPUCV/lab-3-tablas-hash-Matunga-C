@@ -70,7 +70,7 @@ HashMap * createMap(long capacity) {
     map->buckets = (Pair **)malloc(sizeof(Pair *) * capacity); //crea el espacio para los pares
     map->size = 0; //inicializa la cantidad de datos en la tabla
     map->capacity = capacity; //inicializa la capacidad de la tabla
-    map->current = 0; //inicializa el indice del ultimo dato accedido
+    map->current = -1; //inicializa el indice del ultimo dato accedido
     for(int i = 0; i < capacity; ++i){
         map->buckets[i] = NULL; //inicializa los espacios de la tabla en NULL
     }
