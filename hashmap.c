@@ -82,10 +82,18 @@ void eraseMap(HashMap * map,  char * key) {
 
 }
 
-Pair * searchMap(HashMap * map,  char * key) {   
-
-
-    return NULL;
+Pair * searchMap(HashMap * map,  char * key) {
+    if(map == NULL) return NULL;
+    if(key == NULL) return NULL;
+    long index = hash(key, map->capacity); //busca el indice de la clave
+    while(map->buckets[index] != NULL){ //mientras haya un par en la tabla
+        if(is_equal(map->buckets[index]->key, key)){ //si la clave es igual a la buscada
+            map->current = index; //actualiza el indice del ultimo dato accedido
+            return map->buckets[index]; //devuelve el par encontrado
+        }
+        index = (index + 1) % map->capacity; //busca el siguiente espacio libre
+    }
+    return NULL; //si no se encuentra la clave, devuelve NULL
 }
 
 Pair * firstMap(HashMap * map) {
