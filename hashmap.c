@@ -80,13 +80,13 @@ HashMap * createMap(long capacity) {
 void eraseMap(HashMap * map,  char * key) {    
     if(map == NULL) return;
     if(key == NULL) return;
-    long index = hash(key, map->capacity);
-    while(map->buckets[index] != NULL){
-        if(is_equal(map->buckets[index]->key, key)){
-            map->buckets[index]->key = NULL;
-            map->buckets[index]->value = NULL;
-            map->size--;
-            return;
+    long index = hash(key, map->capacity); //busca el indice de la clave
+    while(map->buckets[index] != NULL){ //mientras haya un par en la tabla
+        if(is_equal(map->buckets[index]->key, key)){ //si la clave coincide
+            map->buckets[index]->key = NULL; //elimina la clave
+            map->buckets[index]->value = NULL; //elimina el valor
+            map->size--; //disminuye la cantidad de datos en la tabla
+            return; //sale de la funcion
         }
         index = (index + 1) % map->capacity; //busca el siguiente espacio
     }
@@ -106,12 +106,20 @@ Pair * searchMap(HashMap * map,  char * key) {
     return NULL; //si no se encuentra la clave, devuelve NULL
 }
 
-Pair * firstMap(HashMap * map) {
-
-    return NULL;
+Pair * firstMap(HashMap * map) { 
+    if(map == NULL) return NULL; //si el mapa es NULL, devuelve NULL
+    map->current = -1;
+    for(size_t i = 0; i < map->capacity; ++i){ //busca el primer par en la tabla
+        if(map->buckets[i]->value != NULL){ //si el par no es NULL
+            map->current = i; //actualiza el indice del ultimo dato accedido
+            return map->buckets[i]; //devuelve el par encontrado
+        }
+    }
+    return NULL; //si no se encuentra ningun par, devuelve NULL
 }
 
 Pair * nextMap(HashMap * map) {
-
+    if(map == NULL) return NULL;
+    
     return NULL;
 }
