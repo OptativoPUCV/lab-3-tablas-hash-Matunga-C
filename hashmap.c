@@ -58,10 +58,36 @@ void insertMap(HashMap * map, char * key, void * value) {
     map->current = index; //actualiza el indice del ultimo dato accedido       
 }
 
+/*a - Cree una variable auxiliar de tipo Pair** para matener el arreglo map->buckets (*old_buckets*);
+
+b - Duplique el valor de la variable capacity.
+
+c - Asigne a map->buckets un nuevo arreglo con la nueva capacidad.
+
+d - Inicialice size a 0.
+
+e - Inserte los elementos del arreglo *old_buckets* en el mapa (use la función insertMap que ya implementó). */
+
 void enlarge(HashMap * map) {
-    enlarge_called = 1; //no borrar (testing purposes)
-
-
+    if(map == NULL) return;
+    if(map->capacity == 0) return;
+    if(map->size == 0) return;
+    Pair ** old_buckets = map->buckets; //crea una variable auxiliar para guardar el arreglo de pares
+    long old_capacity = map->capacity; //guarda la capacidad anterior
+    map->capacity *= 2; //duplica la capacidad
+    map->buckets = (Pair **)malloc(sizeof(Pair *) * map->capacity); //crea el nuevo arreglo de pares
+    map->size = 0; //inicializa la cantidad de datos en la tabla
+    for(int i = 0; i < map->capacity; ++i){
+        map->buckets[i] = NULL; //inicializa los espacios de la tabla en NULL
+    }
+    for(int i = 0; i < old_capacity; ++i){ //recorre el arreglo anterior
+        if(old_buckets[i] != NULL){ //si el par no es NULL
+            insertMap(map, old_buckets[i]->key, old_buckets[i]->value); //inserta el par en el nuevo arreglo
+            free(old_buckets[i]); //libera el espacio del par anterior
+        }
+    }
+    free(old_buckets); //libera el espacio del arreglo anterior
+    enlarge_called=1; //indica que se llamo a la funcion enlarge
 }
 
 
@@ -106,25 +132,23 @@ Pair * searchMap(HashMap * map,  char * key) {
     return NULL; //si no se encuentra la clave, devuelve NULL
 }
 
-Pair * firstMap(HashMap * map) { 
-    if (map == NULL || map->capacity == 0) return NULL;
-
-    for (size_t i = 0; i < map->capacity; i++) {
-        if (map->buckets[i] != NULL && map->buckets[i]->key != NULL) {
-            map->current = i;
-            return map->buckets[i];
+Pair * firstMap(HashMap * map) {  
+    if (map == NULL || map->capacity == 0) return NULL; // si la tabla es NULL o vacia
+    for (size_t i = 0; i < map->capacity; i++) { // recorre la tabla
+        if (map->buckets[i] != NULL && map->buckets[i]->key != NULL) { // si el par no es NULL 
+            map->current = i; // actualiza el indice del ultimo dato accedido
+            return map->buckets[i]; // devuelve el primer par encontrado
         }
     }
     return NULL;
 }
 
 Pair * nextMap(HashMap * map) {
-    if (map == NULL || map->capacity == 0) return NULL;
-
-    for (long i = map->current + 1; i < map->capacity; ++i) {
-        if (map->buckets[i] != NULL && map->buckets[i]->key != NULL) {
-            map->current = i;
-            return map->buckets[i];
+    if (map == NULL || map->capacity == 0) return NULL; // si la tabla es NULL o vacia
+    for (long i = map->current + 1; i < map->capacity; ++i) { // recorre la tabla desde el siguiente indice
+        if (map->buckets[i] != NULL && map->buckets[i]->key != NULL) { // si el par no es NULL
+            map->current = i; // actualiza el indice del ultimo dato accedido
+            return map->buckets[i]; // devuelve el siguiente par encontrado
         }
     }
     return NULL;
